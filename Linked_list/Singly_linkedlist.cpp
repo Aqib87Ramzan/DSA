@@ -1,31 +1,53 @@
 #include <iostream>
 using namespace std;
 
-// Node structure
-struct Node {
+//======= Node structure========
+class Node {
+public:
     int data;
     Node* next;
+
+    Node(int val = 0) {
+        data = val;
+        next = nullptr;
+    }
 };
 
-Node* head = nullptr;
+// ======= Singly Linked List class ========
+class SinglyLinkedList {
+private:
+    Node* head;
 
-// Insert at beginning
+public:
+    SinglyLinkedList() : head(nullptr) {} //Constructor to initialize the head to nullptr
+
+    //for use in the main function to get and set the head of the list
+    Node* GetHead() {
+    return head;
+    }
+    void SetHead(Node* h) {
+    head = h;
+    }
+
+
+// ==========================================================================
+// (1)
+// =============Insertion cases=================
+
+//Insert at the beginning=======
 void InsertAtBeginning(int value) {
-    Node* newNode = new Node();
-    newNode->data = value;
+    Node* newNode = new Node(value);
     newNode->next = head;
     head = newNode;
 }
 
-// Insert at end
+// Insert at the end=============
 void InsertAtEnd(int value) {
-    Node* newNode = new Node();
-    newNode->data = value;
-    newNode->next = nullptr;
+    Node* newNode = new Node(value);
 
-    if (head == nullptr) {
+    if (head == nullptr) {  // if the list is empty then head is newNode
         head = newNode;
-    } else {
+    } else {              // if the list is not empty
         Node* temp = head;
         while (temp->next != nullptr) {
             temp = temp->next;
@@ -34,15 +56,19 @@ void InsertAtEnd(int value) {
     }
 }
 
-// Insert at specific position
-void insertAtPosition(int value, int position) {
-    if (position == 1) {
-        InsertAtBeginning(value);
+// Insert at specific position=========
+void InsertAtPosition(int value, int position) {
+    if (position < 1) {
+        cout << "Invalid position! Position should be greater than 0." << endl;
         return;
     }
 
-    Node* newNode = new Node();
-    newNode->data = value;
+    Node* newNode = new Node(value);
+    if (position == 1) {
+        newNode->next = head;
+        head = newNode;
+        return;
+    }
 
     Node* temp = head;
     for (int i = 1; i < position - 1 && temp != nullptr; i++) {
@@ -50,32 +76,39 @@ void insertAtPosition(int value, int position) {
     }
 
     if (temp == nullptr) {
-        cout << "Position out of bounds!" << endl;
+        cout << "Position is out of bounds." << endl;
         delete newNode;
         return;
     }
 
-    newNode->next = temp->next;
-    temp->next = newNode;
+    newNode->next = temp->next; // Link the new node to the next node
+    temp->next = newNode;       // Link the previous node to the new node
 }
 
-// Delete from beginning
+// ====================================================================================================
+
+//  (2)
+// =============Deletion cases=================
+
+// Delete from the beginning=========
 void DeleteFromBeginning() {
     if (head == nullptr) {
         cout << "List is empty, nothing to delete." << endl;
         return;
+    } else {
+        Node* temp = head;
+        head = head->next;
+        delete temp;
     }
-    Node* temp = head;
-    head = head->next;
-    delete temp;
 }
 
-// Delete from end
+// Delete from the end=========
 void DeleteFromEnd() {
     if (head == nullptr) {
         cout << "List is empty, nothing to delete." << endl;
         return;
     }
+
     if (head->next == nullptr) {
         delete head;
         head = nullptr;
@@ -86,17 +119,22 @@ void DeleteFromEnd() {
     while (temp->next->next != nullptr) {
         temp = temp->next;
     }
-
     delete temp->next;
     temp->next = nullptr;
 }
 
-// Delete from specific position
+// Delete from specific position=========
 void DeleteFromPosition(int position) {
     if (head == nullptr) {
         cout << "List is empty, nothing to delete." << endl;
         return;
     }
+
+    if (position < 1) {
+        cout << "Invalid position! Position should be greater than 0." << endl;
+        return;
+    }
+
     if (position == 1) {
         Node* temp = head;
         head = head->next;
@@ -105,61 +143,140 @@ void DeleteFromPosition(int position) {
     }
 
     Node* current = head;
-    for (int i = 1; i < position - 1 && current != nullptr; i++) {
+    Node* previous = nullptr;
+
+    for (int i = 1; i < position && current != nullptr; i++) {
+        previous = current;
         current = current->next;
     }
 
-    if (current == nullptr || current->next == nullptr) {
-        cout << "Position out of bounds!" << endl;
+    if (current == nullptr) {
+        cout << "Position out of bounds." << endl;
         return;
     }
 
-    Node* temp = current->next;
-    current->next = temp->next;
-    delete temp;
+    previous->next = current->next;
+    delete current;
 }
 
-// Display the list
+// ===============================================================================
+
+//   (3)
+// =============Reversing the list=================
+void ReverseList() {
+    Node* prev = nullptr;
+    Node* current = head;
+    Node* next = nullptr;
+
+    while (current != nullptr) {
+        next = current->next;
+        current->next = prev;
+        prev = current;
+        current = next;
+    }
+
+    head = prev;
+}
+
+// ===============================================================================
+
+//  (4)
+// =============Merging the two sorted linked lists=================
+Node* MergeSortedLists(Node* list1, Node* list2) {
+    if (list1 == nullptr) return list2;
+    if (list2 == nullptr) return list1;
+
+    Node* mergedList = nullptr;
+
+    if (list1->data < list2->data) {
+        mergedList = list1;
+        mergedList->next = MergeSortedLists(list1->next, list2);
+    } else {
+        mergedList = list2;
+        mergedList->next = MergeSortedLists(list1, list2->next);
+    }
+
+    return mergedList;
+}
+
+// ===============================================================================
+
+// (5)
+// =============Removing Duplicates from the Sorted list=================
+void RemoveDuplicates() {
+    if (head == nullptr) {
+        cout << "List is empty, nothing to remove." << endl;
+        return;
+    }
+
+    Node* current = head;
+    while (current != nullptr && current->next != nullptr) {
+        if (current->data == current->next->data) {
+            Node* temp = current->next;
+            current->next = temp->next;
+            delete temp;
+        } else {
+            current = current->next;
+        }
+    }
+}
+
+//=================================================================================
+
+// (6)
+// =================sort the linked list using merge sort=================
+Node* MergeSort(Node* h) {
+    if (h == nullptr || h->next == nullptr)
+        return h;
+
+    Node* slow = h;
+    Node* fast = h->next;
+
+    while (fast != nullptr && fast->next != nullptr) {
+        slow = slow->next;
+        fast = fast->next->next;
+    }
+
+    Node* mid = slow->next;
+    slow->next = nullptr;
+
+    Node* left = MergeSort(h);
+    Node* right = MergeSort(mid);
+
+    return MergeSortedLists(left, right);
+}
+
+void SortList() {
+    head = MergeSort(head);
+}
+
+//================================================================================
+// =============display the list=================
 void DisplayList() {
+    if (head == nullptr) {
+        cout << "List is empty." << endl;
+        return;
+    }
+
     Node* temp = head;
-    cout << "Current List: ";
     while (temp != nullptr) {
         cout << temp->data << " -> ";
         temp = temp->next;
     }
     cout << "NULL" << endl;
 }
+};
 
-// Search for a value
-void Search(int value) {
-    Node* temp = head;
-    int position = 1;
-    while (temp != nullptr) {
-        if (temp->data == value) {
-            cout << "Value " << value << " found at position " << position << "." << endl;
-            return;
-        }
-        temp = temp->next;
-        position++;
-    }
-    cout << "Value " << value << " not found in the list." << endl;
-}
-
-// Main Menu
 int main() {
+    SinglyLinkedList list;
     int choice, value, position;
 
     do {
-        cout << "\n===== Singly Linked List Menu =====" << endl;
-        cout << "1. Insert at Beginning" << endl;
-        cout << "2. Insert at End" << endl;
-        cout << "3. Insert at Position" << endl;
-        cout << "4. Delete from Beginning" << endl;
-        cout << "5. Delete from End" << endl;
-        cout << "6. Delete from Position" << endl;
-        cout << "7. Search for a value" << endl;
-        cout << "8. Display List" << endl;
-        cout << "9. Exit" << endl;
+        cout << "\n====== Singly Linked List Menu ======\n";
+        cout << "1. Insert at Beginning\n2. Insert at End\n3. Insert at Position\n";
+        cout << "4. Delete from Beginning\n5. Delete from End\n6. Delete from Position\n";
+        cout << "7. Display List\n8. Reverse List\n9. Remove Duplicates (sorted only)\n";
+        cout << "10. Sort List (Merge Sort)\n11. Merge two sorted linked lists\n0. Exit\n";
         cout << "Enter your choice: ";
         cin >> choice;
 
@@ -167,56 +284,104 @@ int main() {
         case 1:
             cout << "Enter value to insert at beginning: ";
             cin >> value;
-            InsertAtBeginning(value);
+            list.InsertAtBeginning(value);
             break;
 
         case 2:
             cout << "Enter value to insert at end: ";
             cin >> value;
-            InsertAtEnd(value);
+            list.InsertAtEnd(value);
             break;
 
         case 3:
-            cout << "Enter value to insert: ";
-            cin >> value;
-            cout << "Enter position: ";
-            cin >> position;
-            insertAtPosition(value, position);
+            cout << "Enter value and position to insert: ";
+            cin >> value >> position;
+            list.InsertAtPosition(value, position);
             break;
 
         case 4:
-            DeleteFromBeginning();
+            list.DeleteFromBeginning();
             break;
 
         case 5:
-            DeleteFromEnd();
+            list.DeleteFromEnd();
             break;
 
         case 6:
-            cout << "Enter position to delete from: ";
+            cout << "Enter position to delete: ";
             cin >> position;
-            DeleteFromPosition(position);
+            list.DeleteFromPosition(position);
             break;
 
         case 7:
-            cout << "Enter value to search: ";
-            cin >> value;
-            Search(value);
+            list.DisplayList();
             break;
 
         case 8:
-            DisplayList();
+            list.ReverseList();
+            cout << "List reversed.\n";
             break;
 
         case 9:
-            cout << "Exiting..." << endl;
+            list.RemoveDuplicates();
+            cout << "Duplicates removed (from sorted list).\n";
+            break;
+
+        case 10:
+            list.SortList();
+            cout << "List sorted using merge sort.\n";
+            break;
+        case 11: {
+            cout << "Creating first sorted list:\n";
+            SinglyLinkedList list1;
+            int n1, val1;
+            cout << "Enter number of elements for List 1: ";
+            cin >> n1;
+            for (int i = 0; i < n1; i++) {
+                cout << "Enter value " << i + 1 << ": ";
+                cin >> val1;
+                list1.InsertAtEnd(val1);
+            }
+        
+            cout << "Creating second sorted list:\n";
+            SinglyLinkedList list2;
+            int n2, val2;
+            cout << "Enter number of elements for List 2: ";
+            cin >> n2;
+            for (int i = 0; i < n2; i++) {
+                cout << "Enter value " << i + 1 << ": ";
+                cin >> val2;
+                list2.InsertAtEnd(val2);
+            }
+        
+            // Get the heads
+            Node* head1 = list1.GetHead();
+            Node* head2 = list2.GetHead();
+        
+            // Merge the lists
+            Node* mergedHead = list.MergeSortedLists(head1, head2);
+        
+            // Display merged list
+            cout << "Merged List: ";
+            Node* temp = mergedHead;
+            while (temp != nullptr) {
+                cout << temp->data << " -> ";
+                temp = temp->next;
+            }
+            cout << "NULL\n";
+            break;
+        }
+
+
+        case 0:
+            cout << "Exiting program.\n";
             break;
 
         default:
-            cout << "Invalid choice! Please try again." << endl;
+            cout << "Invalid choice. Please try again.\n";
         }
 
-    } while (choice != 9);
+    } while (choice != 0);
 
     return 0;
 }
