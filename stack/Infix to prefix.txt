@@ -1,0 +1,10 @@
+Infix to Prefix convertion rules
+1) Reverse the original string
+2) If coming is '(' then pop all till ')'
+3) If coming operator has higher precedence then operator on stack, simply push the coming one
+4) If coming operator has lower precedence then operator on stack, then pop the prev one and push the new one
+5) If coming operator has equal precedence then operator on stack,then associativity rules applied
+i) L -> R, then push the new one i.e coming is + and prev is -  then simple -+ on stack
+ii) R -> L, then pop the prev one and push the new one on the stack, i.e ^ is prev on stack and coming is ^ , then pop the ^ prev and push the new ^
+6) Continue
+7) At the end, re-reverse the string
