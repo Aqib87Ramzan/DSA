@@ -1,7 +1,7 @@
 Infix to Postfix convertion rules
 1) ')' then pop others until  '('
 2) higher precedence of incoming then simply push
-3)lower precedence then of incoming then pop the previous and push the new one but compare till end
+3)lower precedence of incoming then pop the previous and push the new one but compare till end
 4) if equal precedence, then rule of associativity follows 
 i) L -> R then pop previous and push new one
 ii) R-> L then simply push the new one
