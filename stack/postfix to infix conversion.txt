@@ -1,0 +1,13 @@
+origincal exp = abc* + def^/-
+w = ef^ = e ^ f = abc* + dw/-
+x = bc* = b * c = ax + dw/-
+y = dw/ = d / w = ax + y - 
+z = ax+ = a + x = zy-
+f(x) = zy- = z - y
+now open it
+= z - y
+= (a + x) - y
+= (a + b * c) - y
+= (a + b * c) - d / w
+= (a + b * c) - d / e ^ f
+= a + b * c - d / e ^ f
