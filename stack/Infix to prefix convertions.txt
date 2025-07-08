@@ -10,13 +10,19 @@ ii) R -> L, then pop the prev one and push the new one on the stack, i.e ^ is pr
 7) At the end, re-reverse the string
 
 ==============================there is another way to do this==============================
-exp = a + b * c -d / e ^ f
+
+original exp = a + b * c -d / e ^ f
+
+choose from higher to lower precedence and give them specific variables names
+
 w = e ^ f = ^ef
 x = b * c = *bc
 y = d / w = /dw
 z = a + x = + ax
 f(x) = z - y = -zy
-now open it 
+
+========now open it=========
+
 = -zy
 = -(+ax)y
 = -(+a*bc)y
