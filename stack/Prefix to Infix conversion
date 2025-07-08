@@ -12,4 +12,34 @@ f(x) = -zy = z - y
 = (a + x) - y
 = (a + b * c) - y
 = (a + b * c) - d / w
-= a + b * c - d / e ^ f  
+= a + b * c - d / e ^ f 
+
+==== or: precedence is sometimes not important but precedence ensures correct brakets=====
+
+original exp = -*+AB+/^CD - EFGH
+
+====choosing variables from L -> R=====
+a = +AB = A + B = -*a+/^CD - EFGH
+b = ^CD = C ^ D = -*a+/b - EFGH
+c = -EF = E - F = -*a+/bcGH
+d = /bc = b / c = -*a+dGH
+e = +dG = d + G = -*aeH
+f = *ae = a * e = -fH
+f(x) = -fH = f - H
+
+===now open it====
+
+= f - H
+= (a*e) - H
+= ((A + B) * e) - H
+= ((A + B) * (d + G)) - H
+= ((A + B) * ((b / c) + G)) - H
+= ((A + B) * ((C ^ D)/c) + G)) - H
+= ((A + B) * ((C ^ D)/(E - F) + G)) - H
+
+
+
+
+
+
+
