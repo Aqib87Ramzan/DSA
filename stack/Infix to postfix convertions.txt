@@ -6,3 +6,18 @@ Infix to Postfix convertion rules
 i) L -> R then pop previous and push new one
 ii) R-> L then simply push the new one
 5) Reach till the end then remove all the old ones
+
+===========there is another way to do this==============
+a + b * c -d / e ^ f
+w = e ^ f = ef^
+x = b * c = bc*
+y = d / w = dw/
+z = a + x = ax+
+f(x) = z - y = zy-
+now open it
+= zy-
+= (ax+)y-
+= (abc*+)y-
+= (abc*+)(dw/)-
+= (abc*+)(def^/)-
+= abc*+def^/-
