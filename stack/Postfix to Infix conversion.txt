@@ -1,6 +1,6 @@
 origincal exp = abc* + def^/-
 
-choose from higher to lower precedence
+choose from higher to lower precedence and give them specific variables names
 
 w = ef^ = e ^ f = abc* + dw/-
 x = bc* = b * c = ax + dw/-
