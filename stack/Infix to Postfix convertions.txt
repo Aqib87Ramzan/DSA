@@ -8,13 +8,17 @@ ii) R-> L then simply push the new one
 5) Reach till the end then remove all the old ones
 
 ===========there is another way to do this==============
-a + b * c -d / e ^ f
+original exp = a + b * c -d / e ^ f
+
+choose from higher to lower precedence and give them specific variables names
+
 w = e ^ f = ef^
 x = b * c = bc*
 y = d / w = dw/
 z = a + x = ax+
 f(x) = z - y = zy-
-now open it
+
+==========now open it========
 = zy-
 = (ax+)y-
 = (abc*+)y-
