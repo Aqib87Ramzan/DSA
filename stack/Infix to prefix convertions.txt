@@ -8,3 +8,18 @@ i) L -> R, then push the new one i.e coming is + and prev is -  then simple -+ o
 ii) R -> L, then pop the prev one and push the new one on the stack, i.e ^ is prev on stack and coming is ^ , then pop the ^ prev and push the new ^
 6) Continue
 7) At the end, re-reverse the string
+
+==============================there is another way to do this==============================
+exp = a + b * c -d / e ^ f
+w = e ^ f = ^ef
+x = b * c = *bc
+y = d / w = /dw
+z = a + x = + ax
+f(x) = z - y = -zy
+now open it 
+= -zy
+= -(+ax)y
+= -(+a*bc)y
+= -(+a*bc)/dw
+= -(+a*bc)/d^ef
+= -+a*bc/d^ef
