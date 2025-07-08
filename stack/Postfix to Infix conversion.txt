@@ -16,3 +16,37 @@ f(x) = zy- = z - y
 = (a + b * c) - d / w
 = (a + b * c) - d / e ^ f
 = a + b * c - d / e ^ f
+
+======or: precedence is not sometimes important just choose from left to right (L -> R) for postfix to infix conversion======
+original exp = AB- MN ^ OP + * + QRS^ / T * - Z +
+
+move from Left to right and give them var names
+a = AB- = A - B = aMN ^ OP + * + QRS^ / T * - Z +
+b = MN^ = M ^ N = abOP + * + QRS^ / T * - Z +
+c = OP+ = O + P = abc * + QRS^ / T * - Z +
+d = bc* = b * c = ad + QRS^ / T * - Z +
+e = ad+ = a + d = eQRS^ / T * - Z +
+f = RS^ = R ^ S = eQf / T * - Z +
+g = Qf/ = Q / f = egT * - Z +
+h = gT* = g * T = eh- Z +
+i = eh- = e - h = iZ+
+f(x) = iz+ = i + Z
+
+======now open the function=======
+= i + Z
+= (e - h) + Z
+= ((a + d) - h) + Z
+= (((A - B) + d) - h) + Z
+= (((A - B) + (b * c) - h) + Z
+= (((A - B) + ((M^N)*c)) - h) + Z
+= (((A - B) + ((M^N)*(O+P)) - h) + Z
+= (A - B) + (M ^ B) * (O + P) - h + Z
+= (A - B) + (M ^ B) * (O + P) - (g*T) + Z
+= (A - B) + (M ^ B) * (O + P) - ((Q/f)*T) + Z
+= (A - B) + (M ^ B) * (O + P) - ((Q/R^S)*T + Z
+= (A - B) + (M ^ B) * (O + P) - Q / R ^ S * T + Z
+
+
+
+
+
