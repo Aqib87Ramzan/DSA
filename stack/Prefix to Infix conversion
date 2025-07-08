@@ -1,0 +1,15 @@
+original exp = -+a*bc/d^ef
+
+choose from higher to lower precedence and give them specific variables names
+
+w = ^rf = e ^ f = -+a*bc/dw
+x = *bc = b * c = -+ax / dw
+y = /dw = d / w = -+axy = -(+axy)
+z = +ax = a + x = -zy
+f(x) = -zy = z - y
+========now open it======== 
+= z - y
+= (a + x) - y
+= (a + b * c) - y
+= (a + b * c) - d / w
+= a + b * c - d / e ^ f  
