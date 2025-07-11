@@ -1,4 +1,6 @@
 Deque = insert and delete from  both rear and front.
+Deque = characteristics of both stack and queue
+
 ======Key logic behind operations=======
 
 Operation	         || Logic (with circular array of size MAX)
@@ -7,3 +9,14 @@ Insert at front	   || front = (front - 1 + MAX) % MAX
 Insert at rear	   || rear = (rear + 1) % MAX
 Delete from front	 || front = (front + 1) % MAX
 Delete from rear	 || rear = (rear - 1 + MAX) % MAX
+
+===========================================================
+
+(1) Input Restricted:
+-Insertion is allowed from one end only(usually rear)
+-Deletion is allowed from both ends
+
+(2) Output restricted:
+-Deletion is allowed from one end only(usually front)
+-Insertion is allowed from both ends
+
