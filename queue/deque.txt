@@ -1,0 +1,9 @@
+Deque = insert and delete from  both rear and front.
+======Key logic behind operations=======
+
+Operation	         || Logic (with circular array of size MAX)
+===========================================================
+Insert at front	   || front = (front - 1 + MAX) % MAX
+Insert at rear	   || rear = (rear + 1) % MAX
+Delete from front	 || front = (front + 1) % MAX
+Delete from rear	 || rear = (rear - 1 + MAX) % MAX
